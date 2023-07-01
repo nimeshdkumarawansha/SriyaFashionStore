@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* <!-- Plugins CSS File --> */
+@import url('../src/assets/css/bootstrap.min.css');
+@import url('../src/assets/css/plugins/owl-carousel/owl.carousel.css');
+@import url('../src/assets/css/plugins/magnific-popup/magnific-popup.css');
+@import url('../src/assets/css/style.css');
+
+@import url('./style.scss');
+
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */

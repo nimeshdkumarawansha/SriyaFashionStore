@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,18 +17,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [HomeController::class, "index"])->name('index');
+Route::get('/dashboard', [HomeController::class, "dashboard"])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,3 +27,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::prefix('vehicles')->group(function () {
+    Route::get('/', [VehicleController::class, 'index'])->name('vehicles');
+    Route::get('/vehicles', [VehicleController::class, 'list'])->name('vehicles.list');
+    Route::post('/vehicles/add', [VehicleController::class, 'add'])->name('vehicles.store');
+    Route::delete('/{id}/vehicles', [VehicleController::class, 'delete'])->name('vehicles.delete');
+    Route::get('/vehicles/{id}', [VehicleController::class, 'get'])->name('vehicles.get');
+    Route::post('/vehicles/{id}', [VehicleController::class, 'update'])->name('vehicles.update');
+});
